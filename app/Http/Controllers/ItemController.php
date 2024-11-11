@@ -467,8 +467,8 @@ public function deleteSelected(Request $request)
 
     // 検索処理
     public function search(Request $request){
-
-         // バリデーションルールの定義
+    
+    // バリデーションルールの定義
     $request->validate([
         'upper' => 'nullable|integer|min:0',  // 価格の上限は0以上の整数
         'lower' => 'nullable|integer|min:0|lte:upper',  // 価格の下限は0以上の整数かつ上限以下
@@ -492,8 +492,6 @@ public function deleteSelected(Request $request)
     if (!empty($keyword)) {
         $items->where(function($query) use ($keyword) {
             $query->where('name', 'LIKE', "%{$keyword}%")
-                  ->orWhere('price', 'LIKE', "%{$keyword}%")
-                  ->orWhere('dawnload', 'LIKE', "%{$keyword}%")
                   ->orWhere('comment', 'LIKE', "%{$keyword}%")
                   ->orWhereHas('company', function($query) use ($keyword) {
                       $query->where('company_name', 'LIKE', "%{$keyword}%");
