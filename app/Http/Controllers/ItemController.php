@@ -125,202 +125,123 @@ public function searchReset(Request $request)
     /**
      * アプリ登録
      */
-//     public function add(Request $request)
-//     {
-//         // POSTリクエストのとき
-//         if ($request->isMethod('post')) {
-//             // バリデーション
+    public function add(Request $request)
+    {
+        // POSTリクエストのとき
+        if ($request->isMethod('post')) {
+            // バリデーション
 
-//             $rules = [
-//                 'name' => 'required|max:100',
-//                 'type' => 'required|in:1,2,3,4,5,6', // カテゴリー選択のバリデーション
-//                 'company_id' => 'required_without:company_name',
-//                 'company_name' => 'required_if:company_id,new',
-//                 'dawnload' => 'required|integer|min:0',
-//                 'comment' => 'nullable|string',
-//                 'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // アイコン画像のバリデーション
-//             ];
+            $rules = [
+                'name' => 'required|max:100',
+                'type' => 'required|in:1,2,3,4,5,6', // カテゴリー選択のバリデーション
+                'company_id' => 'required_without:company_name',
+                'company_name' => 'required_if:company_id,new',
+                'dawnload' => 'required|integer|min:0',
+                'comment' => 'nullable|string',
+                'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // アイコン画像のバリデーション
+            ];
 
-//             // カスタムメッセージ
-//             $messages = [
-//                 'name.required' => '名前は必須項目です。',
-//                 'name.max' => '名前は100文字以内で入力してください。',
-//                 'type.required' => 'カテゴリーを選択してください。',
-//                 'type.in' => '選択されたカテゴリーが無効です。',
-//                 'company_id.required_without' => '会社IDは必須です（会社名が入力されていない場合）。',
-//                 'company_name.required_if' => '会社IDが「new」の場合は会社名を入力してください。',
-//                 'dawnload.required' => 'ダウンロード数は必須です。',
-//                 'dawnload.integer' => 'ダウンロード数は整数でなければなりません。',
-//                 'dawnload.min' => 'ダウンロード数は0以上でなければなりません。',
-//                 'comment.string' => 'コメントは文字列で入力してください。',
-//                 'icon.image' => 'アイコン画像はjpeg、png、jpg、gifの形式でなければなりません。',
-//                 'icon.mimes' => 'アイコン画像の形式はjpeg、png、jpg、gifでなければなりません。',
-//                 'icon.max' => 'アイコン画像のサイズは2MB以下でなければなりません。',
-//             ];
+            // カスタムメッセージ
+            $messages = [
+                'name.required' => '名前は必須項目です。',
+                'name.max' => '名前は100文字以内で入力してください。',
+                'type.required' => 'カテゴリーを選択してください。',
+                'type.in' => '選択されたカテゴリーが無効です。',
+                'company_id.required_without' => '会社IDは必須です（会社名が入力されていない場合）。',
+                'company_name.required_if' => '会社IDが「new」の場合は会社名を入力してください。',
+                'dawnload.required' => 'ダウンロード数は必須です。',
+                'dawnload.integer' => 'ダウンロード数は整数でなければなりません。',
+                'dawnload.min' => 'ダウンロード数は0以上でなければなりません。',
+                'comment.string' => 'コメントは文字列で入力してください。',
+                'icon.image' => 'アイコン画像はjpeg、png、jpg、gifの形式でなければなりません。',
+                'icon.mimes' => 'アイコン画像の形式はjpeg、png、jpg、gifでなければなりません。',
+                'icon.max' => 'アイコン画像のサイズは2MB以下でなければなりません。',
+            ];
 
-//             // フラッシュメッセージをセッションに保存
-//             session()->flash('success', '登録が完了しました');
+            // フラッシュメッセージをセッションに保存
+            session()->flash('success', '登録が完了しました');
 
 
-//         // 価格オプションが「価格を入力」の場合のバリデーションルールを追加
-//         if ($request->price_option === 'custom') {
-//             $rules['price'] = 'required|numeric|min:1'; // 価格は必須で数値、1以上
-//         }
+        // 価格オプションが「価格を入力」の場合のバリデーションルールを追加
+        if ($request->price_option === 'custom') {
+            $rules['price'] = 'required|numeric|min:1'; // 価格は必須で数値、1以上
+        }
 
-//         // バリデーション実行
-//         // $this->validate($request, $rules);
+        // バリデーション実行
+        // $this->validate($request, $rules);
 
-//         // バリデーションの実行
-//         $validated = $request->validate($rules, $messages);
-
-//         //  // アイコン画像の保存処理
-//          $iconPath = null;
-//          if ($request->hasFile('icon')) {
-//              $iconPath = $request->file('icon')->store('icons', 'public'); // 'public/icons' ディレクトリに保存
-//          }
-
-//             // アイコン画像の保存処理
-//     // $iconPath = null;
-//     // if ($request->hasFile('icon')) {
-//     //     $file = $request->file('icon');
-        
-//     //     // 画像のリサイズ（例: 横200px、縦200pxにリサイズ）
-//     //     $resizedImage = Image::make($file)->resize(200, 200, function ($constraint) {
-//     //         $constraint->aspectRatio();  // アスペクト比を維持
-//     //         $constraint->upsize();       // 元画像より大きくしない
-//     //     });
-
-//     //     // 画像を指定したディレクトリに保存
-//     //     $iconPath = 'icons/' . time() . '_' . $file->getClientOriginalName();
-//     //     $resizedImage->save(storage_path('app/public/' . $iconPath), 100);
-//     // }
-
-//         // メーカーが存在するか確認または新規作成
-//         if ($request->company_id == 'new' || !$company = Company::find($request->company_id)) {
-//              // `company_id` が `new` または見つからない場合、新しい会社を作成
-//                 $company = Company::create([
-//                     'company_name' => $request->company_name,
-//                     'street_address' => '未設定', // 適切なデフォルト値を設定
-//                     'representative_name' => '未設定', // 適切なデフォルト値を設定
-//                 ]);
-//             }
-
-//             // 価格の決定
-//             $price = $request->price_option === 'free' ? 0 : ($request->price_option === 'custom' ? $request->price : 0);
-
-//             // デバッグ用
-// // dd([
-// //     'user_id' => Auth::user()->id,
-// //     'name' => $request->name,
-// //     'price' => $price,
-// //     'dawnload' => $request->dawnload,
-// //     'company_id' => $company->id,  
-// //     'comment' => $request->comment,
-// //     'icon' => $iconPath, // ここで$iconPathが正しく設定されているか確認
-// // ]);
-
-//             // アプリ登録
-//             Item::create([
-//                 'user_id' => Auth::user()->id,
-//                 'name' => $request->name,
-//                 'type' => $request->type, // カテゴリーを保存
-//                 'price' => $price,
-//                 'dawnload' => $request->dawnload,
-//                 'company_id' => $company->id,  
-//                 'comment'=> $request->comment,
-//                 'icon' => $iconPath, // アイコン画像のパスを保存
-//             ]);
-
-//             return redirect()->route('items.reset')->with('success', '登録が完了しました');
-//         }
-
-//           // GETリクエストのとき
-//         // 重複する会社名を排除して取得
-//         $companies = Company::selectRaw('MAX(id) as id, company_name')
-//             ->groupBy('company_name') // company_nameでグループ化して重複を排除
-//             ->get();
-
-//         return view('item.add', compact('companies'));
-//     }
-
-public function add(Request $request)
-{
-    if ($request->isMethod('post')) {
-        // バリデーション
-        $rules = [
-            'name' => 'required|max:100',
-            'type' => 'required|in:1,2,3,4,5,6',
-            'company_id' => 'required_without:company_name',
-            'company_name' => 'required_if:company_id,new',
-            'dawnload' => 'required|integer|min:0',
-            'comment' => 'nullable|string',
-            'icon_text' => 'nullable|string|max:50', // 画像生成用のテキスト
-        ];
-
-        $messages = [
-            'name.required' => '名前は必須項目です。',
-            'name.max' => '名前は100文字以内で入力してください。',
-            'type.required' => 'カテゴリーを選択してください。',
-            'company_id.required_without' => '会社IDは必須です（会社名が入力されていない場合）。',
-            'company_name.required_if' => '会社IDが「new」の場合は会社名を入力してください。',
-            'dawnload.required' => 'ダウンロード数は必須です。',
-            'dawnload.integer' => 'ダウンロード数は整数でなければなりません。',
-        ];
-
+        // バリデーションの実行
         $validated = $request->validate($rules, $messages);
 
-        // アイコン画像の生成
-        $iconPath = null;
-        if ($request->has('icon_text')) {
-            $text = $request->input('icon_text');
-            $img = Image::canvas(200, 200, '#ffffff'); // 200x200ピクセルの白いキャンバスを作成
-            $img->text($text, 100, 100, function($font) {
-                $font->file(public_path('fonts/arial.ttf')); // フォントの指定
-                $font->size(24);
-                $font->color('#000000');
-                $font->align('center');
-                $font->valign('middle');
-            });
+        //  // アイコン画像の保存処理
+         $iconPath = null;
+         if ($request->hasFile('icon')) {
+             $iconPath = $request->file('icon')->store('icons', 'public'); // 'public/icons' ディレクトリに保存
+         }
 
-            // 画像を保存
-            $iconPath = 'icons/generated_icon.png';
-            Storage::disk('public')->put($iconPath, (string) $img->encode());
-        }
+            // アイコン画像の保存処理
+    // $iconPath = null;
+    // if ($request->hasFile('icon')) {
+    //     $file = $request->file('icon');
+        
+    //     // 画像のリサイズ（例: 横200px、縦200pxにリサイズ）
+    //     $resizedImage = Image::make($file)->resize(200, 200, function ($constraint) {
+    //         $constraint->aspectRatio();  // アスペクト比を維持
+    //         $constraint->upsize();       // 元画像より大きくしない
+    //     });
 
-        // 会社データの取得または新規作成
+    //     // 画像を指定したディレクトリに保存
+    //     $iconPath = 'icons/' . time() . '_' . $file->getClientOriginalName();
+    //     $resizedImage->save(storage_path('app/public/' . $iconPath), 100);
+    // }
+
+        // メーカーが存在するか確認または新規作成
         if ($request->company_id == 'new' || !$company = Company::find($request->company_id)) {
-            $company = Company::create([
-                'company_name' => $request->company_name,
-                'street_address' => '未設定',
-                'representative_name' => '未設定',
+             // `company_id` が `new` または見つからない場合、新しい会社を作成
+                $company = Company::create([
+                    'company_name' => $request->company_name,
+                    'street_address' => '未設定', // 適切なデフォルト値を設定
+                    'representative_name' => '未設定', // 適切なデフォルト値を設定
+                ]);
+            }
+
+            // 価格の決定
+            $price = $request->price_option === 'free' ? 0 : ($request->price_option === 'custom' ? $request->price : 0);
+
+            // デバッグ用
+// dd([
+//     'user_id' => Auth::user()->id,
+//     'name' => $request->name,
+//     'price' => $price,
+//     'dawnload' => $request->dawnload,
+//     'company_id' => $company->id,  
+//     'comment' => $request->comment,
+//     'icon' => $iconPath, // ここで$iconPathが正しく設定されているか確認
+// ]);
+
+            // アプリ登録
+            Item::create([
+                'user_id' => Auth::user()->id,
+                'name' => $request->name,
+                'type' => $request->type, // カテゴリーを保存
+                'price' => $price,
+                'dawnload' => $request->dawnload,
+                'company_id' => $company->id,  
+                'comment'=> $request->comment,
+                'icon' => $iconPath, // アイコン画像のパスを保存
             ]);
+
+            return redirect()->route('items.reset')->with('success', '登録が完了しました');
         }
 
-        // 価格の決定
-        $price = $request->price_option === 'free' ? 0 : ($request->price_option === 'custom' ? $request->price : 0);
+          // GETリクエストのとき
+        // 重複する会社名を排除して取得
+        $companies = Company::selectRaw('MAX(id) as id, company_name')
+            ->groupBy('company_name') // company_nameでグループ化して重複を排除
+            ->get();
 
-        // アプリ登録
-        Item::create([
-            'user_id' => Auth::user()->id,
-            'name' => $request->name,
-            'type' => $request->type,
-            'price' => $price,
-            'dawnload' => $request->dawnload,
-            'company_id' => $company->id,
-            'comment'=> $request->comment,
-            'icon' => $iconPath, // 生成した画像のパスを保存
-        ]);
-
-        return redirect()->route('items.reset')->with('success', '登録が完了しました');
+        return view('item.add', compact('companies'));
     }
-
-    // GETリクエストのとき
-    $companies = Company::selectRaw('MAX(id) as id, company_name')
-        ->groupBy('company_name')
-        ->get();
-
-    return view('item.add', compact('companies'));
-}
 
     // 編集画面遷移
     public function update(Request $request, ItemService $itemService){
