@@ -13,7 +13,7 @@ class UserController extends Controller
     public function index()
     {
         // ユーザー一覧を10件ずつページネートする
-        $users = User::select('id', 'name', 'email', 'auth', 'created_at', 'updated_at')->paginate(3);
+        $users = User::select('id', 'name', 'email', 'auth', 'created_at', 'updated_at')->paginate(10);
         return view('user.index', compact('users'));
     }
 

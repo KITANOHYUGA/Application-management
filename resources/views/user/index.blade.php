@@ -5,7 +5,7 @@
 @section('content')
     <div class="container">
         <div class="p-3">
-            <h1>ユーザー一覧</h1>
+            <h1>ユーザー情報一覧</h1>
         </div>
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
