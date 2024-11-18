@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container">
-        <h1 class="my-4">ユーザー編集</h1>
+        <h1 class="my-4">ユーザー情報編集画面</h1>
 
         <div class="card shadow-sm">
             <div class="card-body">
