@@ -293,20 +293,39 @@
             document.querySelectorAll('.user-checkbox').forEach(checkbox => checkbox.checked = false);
             document.getElementById('select-all').checked = false;
 
-           // 全ページのローカルストレージ/セッションストレージのデータを削除
-           for (let i = 0; i < localStorage.length; i++) {
+        //    // 全ページのローカルストレージ/セッションストレージのデータを削除
+        //    for (let i = 0; i < localStorage.length; i++) {
+        //         const key = localStorage.key(i);
+        //         if (key.startsWith('selectedUserIds_') || key.startsWith('selectAllChecked_')) {
+        //             localStorage.removeItem(key);
+        //         }
+        //     }
+            
+        //     for (let i = 0; i < sessionStorage.length; i++) {
+        //         const key = sessionStorage.key(i);
+        //         if (key.startsWith('selectedUserIds_') || key.startsWith('selectAllChecked_')) {
+        //             sessionStorage.removeItem(key);
+        //         }
+        //     }
+
+        // ローカルストレージとセッションストレージのリセット
+        const keysToRemove = [];
+            for (let i = 0; i < localStorage.length; i++) {
                 const key = localStorage.key(i);
                 if (key.startsWith('selectedUserIds_') || key.startsWith('selectAllChecked_')) {
-                    localStorage.removeItem(key);
+                    keysToRemove.push(key);
                 }
             }
-            
+            keysToRemove.forEach(key => localStorage.removeItem(key));
+
+            const sessionKeysToRemove = [];
             for (let i = 0; i < sessionStorage.length; i++) {
                 const key = sessionStorage.key(i);
                 if (key.startsWith('selectedUserIds_') || key.startsWith('selectAllChecked_')) {
-                    sessionStorage.removeItem(key);
+                    sessionKeysToRemove.push(key);
                 }
             }
+            sessionKeysToRemove.forEach(key => sessionStorage.removeItem(key));
 
             // ボタンの表示も初期化
             toggleButtons();
