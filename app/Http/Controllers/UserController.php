@@ -105,7 +105,7 @@ class UserController extends Controller
    }
    /* ページネーション */
    // 5レコードずつ表示する
-   $users = $users->paginate(3);
+   $users = $users->paginate(5);
 
        return view('user.index',compact('users', 'userName'));
    }
