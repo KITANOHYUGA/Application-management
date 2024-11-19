@@ -27,6 +27,14 @@ class UserController extends Controller
     // ユーザー更新処理
     public function update(Request $request, $id)
     {
+
+        // バリデーションルール
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/|unique:users,email,' . $id,
+            'password' => 'nullable|min:8|regex:/^[a-zA-Z0-9]+$/',
+        ]);
+
         $user = User::findOrFail($id);
 
         $user->name = $request->input('name');

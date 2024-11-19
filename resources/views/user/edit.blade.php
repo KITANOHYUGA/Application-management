@@ -6,6 +6,16 @@
     <div class="container">
         <h1 class="my-4">ユーザー情報編集画面</h1>
 
+        @if ($errors->any())
+        <div class="alert alert-danger container" style="width: 510px;">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+
         <div class="card shadow-sm">
             <div class="card-body">
                 <form action="{{ route('users.update', $user->id) }}" method="POST">
@@ -47,7 +57,7 @@
 
                 <button type="submit" class="btn btn-danger">ユーザーを削除</button>
 
-                <a href="{{ url('/users/list') }}" class="btn btn-primary">ユーザー一覧に戻る</a>
+                <a href="{{ url('/users/list') }}" class="btn btn-primary">ユーザー情報一覧に戻る</a>
             </form>
         </div>
     </div>
