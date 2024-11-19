@@ -38,12 +38,26 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="auth" class="form-label">権限</label>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="auth" name="auth" value="1" {{ $user->auth == 1 ? 'checked' : '' }}>
-                            <label class="form-check-label" for="auth">管理者権限を付与する</label>
-                        </div>
-                    </div>
+    <label for="auth" class="form-label">権限</label>
+    <div class="form-check form-switch">
+        <!-- トグルボタン -->
+        <input 
+            class="form-check-input" 
+            type="checkbox" 
+            id="auth" 
+            name="auth" 
+            value="1" 
+            {{ $user->auth == 1 ? 'checked' : '' }} 
+            onchange="toggleAuthMessage(this)">
+    <!-- メッセージ部分 -->
+    <p 
+        id="auth-message" 
+        class="text-success" 
+        style="display: {{ $user->auth == 1 ? 'block' : 'none' }};">
+        管理者権限が付与されています。
+    </p>
+    </div>
+</div>
 
                     <button type="submit" class="btn btn-success">更新</button>
                 </form>
@@ -61,4 +75,17 @@
             </form>
         </div>
     </div>
-@endsection
+@stop
+
+
+<script>
+    // チェックボックスの状態でメッセージを制御
+    function toggleAuthMessage(checkbox) {
+        const message = document.getElementById('auth-message');
+        if (checkbox.checked) {
+            message.style.display = 'block'; // 表示
+        } else {
+            message.style.display = 'none'; // 非表示
+        }
+    }
+</script>

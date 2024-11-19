@@ -12,8 +12,8 @@ class UserController extends Controller
     // ユーザー一覧表示
     public function index()
     {
-        // ユーザー一覧を10件ずつページネートする
-        $users = User::select('id', 'name', 'email', 'auth', 'created_at', 'updated_at')->paginate(10);
+        // ユーザー一覧を5件ずつページネートする
+        $users = User::select('id', 'name', 'email', 'auth', 'created_at', 'updated_at')->paginate(5);
         return view('user.index', compact('users'));
     }
 
@@ -32,8 +32,18 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/|unique:users,email,' . $id,
-            'password' => 'nullable|min:8|regex:/^[a-zA-Z0-9]+$/',
+            'password' => [
+                'nullable',
+                'min:8',
+                'regex:/^[a-zA-Z0-9]+$/'
+        ],
+    ],[
+            'password.regex' => 'パスワードは数字またはアルファベットで構成してください',
+            'password.min' => 'パスワードは8文字以上にしてください。',
         ]);
+
+        
+
 
         $user = User::findOrFail($id);
 
