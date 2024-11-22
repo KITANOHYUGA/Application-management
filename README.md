@@ -36,7 +36,7 @@ Lalavel 10.13.5
 ```
 <一般利用者>
 メールアドレス：tech.taro@gmail.com
-パスワード：tech0603
+パスワード：taro0603
 
 <管理者>
 メールアドレス：tech.hyu@gmail.com
